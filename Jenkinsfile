@@ -30,10 +30,18 @@ node {
       }
     }
 
+    stage('elixir') {
+      dir('elixir') {
+        docker.image('elixir').inside {
+          sh 'elixir hello_world.ex'
+        }
+      }
+    }
+
     stage('erlang') {
       dir('erlang') {
         docker.image('erlang').inside {
-          sh 'escript hello_world.erl || true'
+          sh 'escript hello_world.erl'
         }
       }
     }
@@ -91,6 +99,15 @@ node {
       dir('ruby') {
         docker.image('ruby').inside {
           sh 'ruby hello_world.rb'
+        }
+      }
+    }
+
+    stage('rust') {
+      dir('rust') {
+        docker.image('rust').inside {
+          sh 'rustc hello_world.rs'
+          sh './hello_world'
         }
       }
     }
